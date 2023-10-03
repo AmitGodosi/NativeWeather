@@ -1,23 +1,32 @@
-import { StatusBar } from 'expo-status-bar';
+import { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import Home from './src/screens/home';
+import * as Font from 'expo-font';
 import {
 	QueryClient,
 	QueryClientProvider,
 } from '@tanstack/react-query'
-import { NavigationContainer } from '@react-navigation/native';
-//import StackNavigator from '@/services/navigation/Stack';
-import Home from './src/screens/home';
 
 const queryClient = new QueryClient()
 
 export default function App() {
+	useEffect(() => {
+		const loadFonts = async () => {
+			await Font.loadAsync({
+				DMMedium: require("./assets/fonts/DMSans-Medium.ttf"),
+				DMBold: require("./assets/fonts/DMSans-Bold.ttf"),
+				DMRegular: require("./assets/fonts/DMSans-Regular.ttf")
+			});
+		};
+
+		loadFonts();
+	}, []);
+
 	return (
 		<View style={styles.container}>
 			<StatusBar style="auto" />
 			<QueryClientProvider client={queryClient}>
-				{/*<NavigationContainer>
-				<StackNavigator />
-			</NavigationContainer>*/}
 				<Home />
 			</QueryClientProvider>
 		</View>

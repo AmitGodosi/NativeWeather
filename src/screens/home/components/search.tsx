@@ -1,27 +1,22 @@
-import { getAutoComplete } from '../../services/api';
-import { useEffect, useRef, useState } from 'react';
+import { getAutoComplete } from '@/services/api';
+import { useRef, useState } from 'react';
 import { FlatList, StyleSheet, Text, TextInput, View } from 'react-native';
-import { EMPTY_STRING } from '../../consts';
+import { EMPTY_STRING, ERROR_MESSAGE, QUERY_KEYS } from '@/constants';
+import { useQuery } from '@tanstack/react-query';
 
 type Props = {
 	changeCityName: (cityInfo: any) => void;
+	isDayTime: boolean;
 }
 
-export default function Search({ changeCityName }: Props) {
+export default function Search({ changeCityName, isDayTime }: Props) {
 	const [searchTerm, setSearchTerm] = useState<string>(EMPTY_STRING);
-	const [searchResult, setSearchResult] = useState<any[]>([]);
 	const textInputRef = useRef<any>(null);
 
-	useEffect(() => {
-		if (searchTerm?.length > 0) {
-			const fetchAutoComplete = async () => {
-				getAutoComplete(searchTerm)
-				const autoCompleteRes = await getAutoComplete(searchTerm)
-				setSearchResult(autoCompleteRes)
-			}
-			fetchAutoComplete()
-		}
-	}, [searchTerm])
+	const { isLoading, error, data } = useQuery({
+		queryKey: [QUERY_KEYS.AUTO_COMPLETE, searchTerm],
+		queryFn: () => getAutoComplete(searchTerm)
+	})
 
 	const fetchCityInfoHandler = (item: any) => {
 		try {
@@ -34,21 +29,20 @@ export default function Search({ changeCityName }: Props) {
 
 	const setInitalState = () => {
 		setSearchTerm(EMPTY_STRING)
-		setSearchResult([])
 		textInputRef?.current?.clear();
 	}
 
 	return (
 		<View style={styles.container}>
-			<Text style={{ textAlign: 'center' }}>Search for city</Text>
+			<Text style={{ textAlign: 'center', color: isDayTime ? 'black' : 'white', fontSize: 20 }}>Search for city</Text>
 			<TextInput
 				ref={textInputRef}
 				onChangeText={(text) => setSearchTerm(text)}
 				style={{ backgroundColor: 'aliceblue', height: 40, borderRadius: 10, padding: 10 }}
 			/>
-			{searchResult?.length > 0 && (
+			{data?.length > 0 && (
 				<FlatList
-					data={searchResult}
+					data={data}
 					keyExtractor={(item) => item?.Key}
 					renderItem={({ item }: any) => (
 						<Text
@@ -58,6 +52,8 @@ export default function Search({ changeCityName }: Props) {
 					)}
 				/>)
 			}
+			{isLoading && <Text style={{ fontSize: 30, letterSpacing: 1 }}>Loading...</Text>}
+			{error && <Text style={{ fontSize: 30, letterSpacing: 1 }}>{ERROR_MESSAGE}</Text>}
 		</View>
 	)
 }
