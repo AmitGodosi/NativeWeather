@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
 import Home from './src/screens/home';
 import * as Font from 'expo-font';
 import {
@@ -24,7 +23,6 @@ export default function App() {
 
 	return (
 		<View style={styles.container}>
-			<StatusBar style="auto" />
 			<QueryClientProvider client={queryClient}>
 				<Home />
 			</QueryClientProvider>
@@ -34,9 +32,6 @@ export default function App() {
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1,
-		backgroundColor: '#fff',
-		alignItems: 'center',
-		justifyContent: 'center',
-	},
+		flex: 1
+	}
 });
