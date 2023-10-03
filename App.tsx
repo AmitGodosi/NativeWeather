@@ -14,7 +14,6 @@ export default function App() {
 	useEffect(() => {
 		const loadFonts = async () => {
 			await Font.loadAsync({
-				DMMedium: require("./assets/fonts/DMSans-Medium.ttf"),
 				DMBold: require("./assets/fonts/DMSans-Bold.ttf"),
 				DMRegular: require("./assets/fonts/DMSans-Regular.ttf")
 			});

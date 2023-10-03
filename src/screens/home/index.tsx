@@ -23,7 +23,7 @@ function Home() {
 			<StatusBar hidden />
 			<ImageBackground source={isDayTime ? require('../../../assets/backgrounds/day.png') : require('../../../assets/backgrounds/night.png')} style={styles.image}>
 				<View style={styles.container}>
-					<Text style={{ fontFamily: 'DMMedium' ,fontSize: 30, letterSpacing: 1, flex: 1, color: isDayTime ? 'black' : 'white' }}>Weather App</Text>
+					<Text style={{ fontFamily: 'DMRegular' ,fontSize: 30, letterSpacing: 1, flex: 1, color: isDayTime ? 'black' : 'white' }}>Weather App</Text>
 					<Search isDayTime={isDayTime} changeCityName={(cityName: any) => setCityName(cityName)} />
 					<View style={{ flex: 6, justifyContent: 'flex-start', alignItems: 'center', gap: 50 }}>
 						{isDataAvailable && (
