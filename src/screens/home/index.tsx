@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { getCityInfo } from '@/services/api';
-import { ImageBackground, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, ImageBackground, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useQuery } from '@tanstack/react-query';
 import { ERROR_MESSAGE, INITAL_CITY_NAME, QUERY_KEYS } from '@/constants';
@@ -37,7 +37,7 @@ function Home() {
 							</View>
 						</>
 					)}
-					{isLoading && <Text style={{ fontSize: 80, letterSpacing: 1 }}>Loading...</Text>}
+					{isLoading && <ActivityIndicator size='large' />}
 					{error && !isDataAvailable && <Text style={{ fontSize: 50, letterSpacing: 1 }}>{ERROR_MESSAGE}</Text>}
 				</View>
 			</SafeAreaView>

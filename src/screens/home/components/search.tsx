@@ -34,12 +34,12 @@ export default function Search({ changeCityName, isDayTime }: Props) {
 
 	return (
 		<View style={styles.container}>
-			<Text style={{ textAlign: 'center', color: isDayTime ? 'black' : 'white', fontSize: 20 }}>Search for city</Text>
-			<TextInput
-				ref={textInputRef}
-				onChangeText={(text) => setSearchTerm(text)}
-				style={{ backgroundColor: 'aliceblue', height: 40, borderRadius: 10, padding: 10 }}
-			/>
+				<TextInput
+					ref={textInputRef}
+					onChangeText={(text) => setSearchTerm(text)}
+					style={{ backgroundColor: 'aliceblue', height: 40, borderRadius: 10, padding: 10, fontSize: 16 }}
+					placeholder='Search for city'
+				/>
 			{data?.length > 0 && (
 				<FlatList
 					data={data}
